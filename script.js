@@ -241,13 +241,26 @@ function typeWriter(element, text, speed = 100) {
     type();
 }
 
+// Typing animation that preserves HTML
+function typeWriterHTML(element, text, speed = 100) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    
+    type();
+}
+
 // Initialize typing animation when page loads
 window.addEventListener('load', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.innerHTML;
-        typeWriter(heroTitle, originalText, 50);
-    }
+    // Removed typing animation to preserve HTML formatting
+    // The hero title will display normally with proper HTML rendering
 });
 
 // Add loading animation
