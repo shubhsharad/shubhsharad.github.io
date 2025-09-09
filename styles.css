@@ -102,8 +102,8 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: #fff;
-    color: #000;
+    background: linear-gradient(135deg, #000 0%, #333 50%, #666 100%);
+    color: #fff;
     position: relative;
     overflow: hidden;
     border-bottom: 2px solid #000;
@@ -116,8 +116,8 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="black" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.2;
 }
 
 .hero-container {
@@ -155,13 +155,13 @@ body {
     font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 1.5rem;
-    color: #666;
+    color: #ccc;
 }
 
 .hero-description {
     font-size: 1.1rem;
     margin-bottom: 2rem;
-    color: #333;
+    color: #ddd;
     max-width: 500px;
 }
 
@@ -198,13 +198,13 @@ body {
 
 .btn-secondary {
     background: transparent;
-    color: #000;
-    border: 2px solid #000;
+    color: #fff;
+    border: 2px solid #fff;
 }
 
 .btn-secondary:hover {
-    background: #000;
-    color: #fff;
+    background: #fff;
+    color: #000;
     transform: translateY(-2px);
 }
 
@@ -230,18 +230,18 @@ body {
     justify-content: center;
     width: 50px;
     height: 50px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
-    color: #000;
+    color: #fff;
     text-decoration: none;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
-    border: 2px solid #000;
+    border: 2px solid #fff;
 }
 
 .social-link:hover {
-    background: #000;
-    color: #fff;
+    background: #fff;
+    color: #000;
     transform: translateY(-3px);
 }
 
@@ -252,15 +252,16 @@ body {
 }
 
 .profile-card {
-    width: 300px;
-    height: 300px;
-    background: rgba(0, 0, 0, 0.05);
+    width: 350px;
+    height: 350px;
+    background: #fff;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(10px);
-    border: 2px solid #000;
+    border: 3px solid #000;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
 .profile-image {
@@ -269,8 +270,8 @@ body {
     position: relative;
     overflow: hidden;
     border-radius: 50%;
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -281,7 +282,7 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid #000;
+    border: 5px solid #000;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -878,12 +879,17 @@ section {
     }
     
     .profile-photo {
-        width: 150px;
-        height: 150px;
+        width: 180px;
+        height: 180px;
     }
     
     .profile-image {
-        width: 150px;
-        height: 150px;
+        width: 180px;
+        height: 180px;
+    }
+    
+    .profile-card {
+        width: 250px;
+        height: 250px;
     }
 }
