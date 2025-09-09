@@ -13,7 +13,138 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     color: #000;
-    background-color: #fff;
+    background-color: #000;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: starfield 20s linear infinite;
+    position: relative;
+}
+
+/* Starfield Animation */
+@keyframes starfield {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 200px 100px;
+    }
+}
+
+/* Additional floating stars */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 50px 100px, #fff, transparent),
+        radial-gradient(1px 1px at 100px 200px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 150px 50px, #ddd, transparent),
+        radial-gradient(1px 1px at 200px 150px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 250px 100px, #fff, transparent),
+        radial-gradient(1px 1px at 300px 250px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 350px 75px, #ddd, transparent),
+        radial-gradient(1px 1px at 400px 200px, rgba(255,255,255,0.8), transparent);
+    background-repeat: repeat;
+    background-size: 450px 300px;
+    animation: starfield2 25s linear infinite reverse;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes starfield2 {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 450px 300px;
+    }
+}
+
+/* Twinkling stars effect */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 25px 25px, #fff, transparent),
+        radial-gradient(1px 1px at 75px 75px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 125px 125px, #fff, transparent),
+        radial-gradient(1px 1px at 175px 175px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 225px 225px, #ddd, transparent),
+        radial-gradient(1px 1px at 275px 275px, rgba(255,255,255,0.4), transparent);
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    animation: twinkle 3s ease-in-out infinite alternate;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Floating particles for extra effect */
+.floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+}
+
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 20s; }
+.particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 18s; }
+.particle:nth-child(3) { left: 30%; animation-delay: 4s; animation-duration: 22s; }
+.particle:nth-child(4) { left: 40%; animation-delay: 6s; animation-duration: 16s; }
+.particle:nth-child(5) { left: 50%; animation-delay: 8s; animation-duration: 24s; }
+.particle:nth-child(6) { left: 60%; animation-delay: 10s; animation-duration: 19s; }
+.particle:nth-child(7) { left: 70%; animation-delay: 12s; animation-duration: 21s; }
+.particle:nth-child(8) { left: 80%; animation-delay: 14s; animation-duration: 17s; }
+.particle:nth-child(9) { left: 90%; animation-delay: 16s; animation-duration: 23s; }
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 .container {
@@ -443,7 +574,8 @@ section {
 
 /* About Section */
 .about {
-    background: #f8f8f8;
+    background: rgba(248, 248, 248, 0.95);
+    backdrop-filter: blur(10px);
 }
 
 .about-content {
@@ -541,6 +673,11 @@ section {
 }
 
 /* Skills Section */
+.skills {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -591,7 +728,8 @@ section {
 
 /* Projects Section */
 .projects {
-    background: #f8f8f8;
+    background: rgba(248, 248, 248, 0.95);
+    backdrop-filter: blur(10px);
 }
 
 .projects-grid {
@@ -677,6 +815,11 @@ section {
 }
 
 /* Contact Section */
+.contact {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
 .contact-content {
     display: flex;
     justify-content: center;
