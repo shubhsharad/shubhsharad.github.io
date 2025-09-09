@@ -268,3 +268,160 @@ loadingStyles.textContent = `
     }
 `;
 document.head.appendChild(loadingStyles);
+
+// Motivational Quotes System
+const quotes = [
+    {
+        text: "The only way to do great work is to love what you do.",
+        author: "Steve Jobs"
+    },
+    {
+        text: "Code is like humor. When you have to explain it, it's bad.",
+        author: "Cory House"
+    },
+    {
+        text: "First, solve the problem. Then, write the code.",
+        author: "John Johnson"
+    },
+    {
+        text: "Experience is the name everyone gives to their mistakes.",
+        author: "Oscar Wilde"
+    },
+    {
+        text: "In order to be irreplaceable, one must always be different.",
+        author: "Coco Chanel"
+    },
+    {
+        text: "The best way to predict the future is to invent it.",
+        author: "Alan Kay"
+    },
+    {
+        text: "Simplicity is the ultimate sophistication.",
+        author: "Leonardo da Vinci"
+    },
+    {
+        text: "Make it work, make it right, make it fast.",
+        author: "Kent Beck"
+    },
+    {
+        text: "The future belongs to those who believe in the beauty of their dreams.",
+        author: "Eleanor Roosevelt"
+    },
+    {
+        text: "Innovation distinguishes between a leader and a follower.",
+        author: "Steve Jobs"
+    }
+];
+
+let currentQuoteIndex = 0;
+let quoteInterval;
+
+// Quote elements
+const quoteText = document.getElementById('quote-text');
+const quoteAuthor = document.getElementById('quote-author');
+const quoteDots = document.getElementById('quote-dots');
+const prevBtn = document.getElementById('prev-quote');
+const nextBtn = document.getElementById('next-quote');
+
+// Initialize quotes
+function initQuotes() {
+    if (!quoteText || !quoteAuthor || !quoteDots) return;
+    
+    // Create dots
+    quotes.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'quote-dot';
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToQuote(index));
+        quoteDots.appendChild(dot);
+    });
+    
+    // Add event listeners
+    if (prevBtn) prevBtn.addEventListener('click', prevQuote);
+    if (nextBtn) nextBtn.addEventListener('click', nextQuote);
+    
+    // Start auto-rotation
+    startQuoteRotation();
+}
+
+// Display quote with animation
+function displayQuote(index) {
+    if (!quoteText || !quoteAuthor) return;
+    
+    const quote = quotes[index];
+    
+    // Add fade animation
+    quoteText.classList.add('quote-fade-in');
+    quoteAuthor.classList.add('quote-fade-in');
+    
+    // Update content
+    quoteText.textContent = `"${quote.text}"`;
+    quoteAuthor.textContent = `- ${quote.author}`;
+    
+    // Update dots
+    document.querySelectorAll('.quote-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+    
+    // Remove animation class after animation completes
+    setTimeout(() => {
+        quoteText.classList.remove('quote-fade-in');
+        quoteAuthor.classList.remove('quote-fade-in');
+    }, 500);
+}
+
+// Go to specific quote
+function goToQuote(index) {
+    currentQuoteIndex = index;
+    displayQuote(currentQuoteIndex);
+    resetQuoteRotation();
+}
+
+// Next quote
+function nextQuote() {
+    currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+    displayQuote(currentQuoteIndex);
+    resetQuoteRotation();
+}
+
+// Previous quote
+function prevQuote() {
+    currentQuoteIndex = currentQuoteIndex === 0 ? quotes.length - 1 : currentQuoteIndex - 1;
+    displayQuote(currentQuoteIndex);
+    resetQuoteRotation();
+}
+
+// Start auto-rotation
+function startQuoteRotation() {
+    quoteInterval = setInterval(() => {
+        nextQuote();
+    }, 5000); // Change quote every 5 seconds
+}
+
+// Reset rotation timer
+function resetQuoteRotation() {
+    clearInterval(quoteInterval);
+    startQuoteRotation();
+}
+
+// Pause rotation on hover
+function pauseQuoteRotation() {
+    clearInterval(quoteInterval);
+}
+
+// Resume rotation when not hovering
+function resumeQuoteRotation() {
+    startQuoteRotation();
+}
+
+// Initialize quotes when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initQuotes();
+    
+    // Pause rotation on hover
+    const quotesContainer = document.querySelector('.quotes-container');
+    if (quotesContainer) {
+        quotesContainer.addEventListener('mouseenter', pauseQuoteRotation);
+        quotesContainer.addEventListener('mouseleave', resumeQuoteRotation);
+    }
+});
