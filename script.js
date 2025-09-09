@@ -225,43 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Typing animation for hero title
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
-
-// Typing animation that preserves HTML
-function typeWriterHTML(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
-
-// Initialize typing animation when page loads
-window.addEventListener('load', () => {
-    // Removed typing animation to preserve HTML formatting
-    // The hero title will display normally with proper HTML rendering
-});
+// Typing animation removed to preserve HTML formatting
 
 // Add loading animation
 window.addEventListener('load', () => {
