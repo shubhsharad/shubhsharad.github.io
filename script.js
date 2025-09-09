@@ -272,44 +272,8 @@ document.head.appendChild(loadingStyles);
 // Motivational Quotes System
 const quotes = [
     {
-        text: "The only way to do great work is to love what you do.",
-        author: "Steve Jobs"
-    },
-    {
-        text: "Code is like humor. When you have to explain it, it's bad.",
-        author: "Cory House"
-    },
-    {
-        text: "First, solve the problem. Then, write the code.",
-        author: "John Johnson"
-    },
-    {
-        text: "Experience is the name everyone gives to their mistakes.",
-        author: "Oscar Wilde"
-    },
-    {
-        text: "In order to be irreplaceable, one must always be different.",
-        author: "Coco Chanel"
-    },
-    {
-        text: "The best way to predict the future is to invent it.",
-        author: "Alan Kay"
-    },
-    {
-        text: "Simplicity is the ultimate sophistication.",
-        author: "Leonardo da Vinci"
-    },
-    {
-        text: "Make it work, make it right, make it fast.",
-        author: "Kent Beck"
-    },
-    {
-        text: "The future belongs to those who believe in the beauty of their dreams.",
-        author: "Eleanor Roosevelt"
-    },
-    {
-        text: "Innovation distinguishes between a leader and a follower.",
-        author: "Steve Jobs"
+        text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+        author: "Winston S. Churchill"
     }
 ];
 
@@ -327,21 +291,29 @@ const nextBtn = document.getElementById('next-quote');
 function initQuotes() {
     if (!quoteText || !quoteAuthor || !quoteDots) return;
     
-    // Create dots
-    quotes.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.className = 'quote-dot';
-        if (index === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToQuote(index));
-        quoteDots.appendChild(dot);
-    });
+    // Since we only have one quote, hide the navigation controls
+    const quoteControls = document.querySelector('.quote-controls');
+    if (quoteControls && quotes.length === 1) {
+        quoteControls.style.display = 'none';
+    }
     
-    // Add event listeners
-    if (prevBtn) prevBtn.addEventListener('click', prevQuote);
-    if (nextBtn) nextBtn.addEventListener('click', nextQuote);
-    
-    // Start auto-rotation
-    startQuoteRotation();
+    // Create dots only if we have multiple quotes
+    if (quotes.length > 1) {
+        quotes.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'quote-dot';
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToQuote(index));
+            quoteDots.appendChild(dot);
+        });
+        
+        // Add event listeners
+        if (prevBtn) prevBtn.addEventListener('click', prevQuote);
+        if (nextBtn) nextBtn.addEventListener('click', nextQuote);
+        
+        // Start auto-rotation
+        startQuoteRotation();
+    }
 }
 
 // Display quote with animation
