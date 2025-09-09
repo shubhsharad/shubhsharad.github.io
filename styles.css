@@ -102,7 +102,9 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #000 0%, #333 50%, #666 100%);
+    background: #000000;
+    background: linear-gradient(135deg, #000000 0%, #333333 50%, #666666 100%);
+    background-attachment: fixed;
     color: #fff;
     position: relative;
     overflow: hidden;
