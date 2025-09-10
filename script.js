@@ -328,6 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize interactive background
     initInteractiveBackground();
+    
+    // Initialize analytics tracking
+    initAnalytics();
 });
 
 // Interactive Background Functions
@@ -457,4 +460,103 @@ function createClickEffect(x, y) {
             effect.parentNode.removeChild(effect);
         }
     }, 600);
+}
+
+// Analytics Functions
+function initAnalytics() {
+    // Track social link clicks
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const platform = getPlatformName(link.href);
+            trackEvent('social_click', {
+                platform: platform,
+                url: link.href
+            });
+        });
+    });
+    
+    // Track email button clicks
+    const emailBtn = document.querySelector('.email-btn');
+    if (emailBtn) {
+        emailBtn.addEventListener('click', () => {
+            trackEvent('contact_click', {
+                action: 'email_button',
+                value: 'shubhns.dev@gmail.com'
+            });
+        });
+    }
+    
+    // Track resume downloads
+    const resumeLink = document.querySelector('a[href*="resume"]');
+    if (resumeLink) {
+        resumeLink.addEventListener('click', () => {
+            trackEvent('file_download', {
+                file_name: 'Shubh_Narayan_Sharma_resume.pdf',
+                file_type: 'pdf'
+            });
+        });
+    }
+    
+    // Track page engagement time
+    let startTime = Date.now();
+    let maxScroll = 0;
+    
+    // Track scroll depth
+    window.addEventListener('scroll', () => {
+        const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        if (scrollPercent > maxScroll) {
+            maxScroll = scrollPercent;
+            trackEvent('scroll_depth', {
+                scroll_percent: scrollPercent
+            });
+        }
+    });
+    
+    // Track time on page when user leaves
+    window.addEventListener('beforeunload', () => {
+        const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+        trackEvent('page_engagement', {
+            time_on_page: timeOnPage,
+            max_scroll: maxScroll
+        });
+    });
+    
+    // Track interactive background interactions
+    document.addEventListener('click', (e) => {
+        trackEvent('interaction', {
+            type: 'click',
+            x: e.clientX,
+            y: e.clientY
+        });
+    });
+}
+
+function getPlatformName(url) {
+    if (url.includes('github.com')) return 'GitHub';
+    if (url.includes('linkedin.com')) return 'LinkedIn';
+    if (url.includes('instagram.com')) return 'Instagram';
+    if (url.includes('resume') || url.includes('.pdf')) return 'Resume';
+    return 'Unknown';
+}
+
+function trackEvent(eventName, parameters = {}) {
+    // Check if gtag is available
+    if (typeof gtag !== 'undefined') {
+        gtag('event', eventName, parameters);
+    }
+    
+    // Also log to console for debugging
+    console.log('Analytics Event:', eventName, parameters);
+}
+
+// Enhanced page view tracking
+function trackPageView() {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname
+        });
+    }
 }
