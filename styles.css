@@ -26,32 +26,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: -2;
-}
-
-.bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    animation: backgroundCycle 15s infinite;
-}
-
-.bg-image-1 {
-    background-image: url('beautiful-view-stars-night-sky.jpg');
-    animation-delay: 0s;
-}
-
-.bg-image-2 {
-    background-image: url('landscape-with-night-starry-sky-silhouette-tree-hill-milky-way-with-lonely-tree-falling-stars.jpg');
-    animation-delay: 5s;
-}
-
-.bg-image-3 {
+    background: #000;
     background-image: 
         radial-gradient(2px 2px at 20px 30px, #eee, transparent),
         radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
@@ -60,15 +35,15 @@ body {
         radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
     background-repeat: repeat;
     background-size: 200px 100px;
-    animation-delay: 10s;
+    animation: starfield 20s linear infinite;
 }
 
-@keyframes backgroundCycle {
-    0%, 30% {
-        opacity: 1;
+@keyframes starfield {
+    from {
+        background-position: 0 0;
     }
-    33%, 100% {
-        opacity: 0;
+    to {
+        background-position: 200px 100px;
     }
 }
 
