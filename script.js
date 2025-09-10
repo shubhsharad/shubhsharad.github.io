@@ -325,4 +325,136 @@ document.addEventListener('DOMContentLoaded', () => {
         quotesContainer.addEventListener('mouseenter', pauseQuoteRotation);
         quotesContainer.addEventListener('mouseleave', resumeQuoteRotation);
     }
+    
+    // Initialize interactive background
+    initInteractiveBackground();
 });
+
+// Interactive Background Functions
+function initInteractiveBackground() {
+    const mouseTrail = document.querySelector('.mouse-trail');
+    const shapes = document.querySelectorAll('.shape');
+    let mouseX = 0;
+    let mouseY = 0;
+    let trailX = 0;
+    let trailY = 0;
+    let isMouseMoving = false;
+    let mouseTimeout;
+
+    // Mouse movement tracking
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Show trail
+        if (mouseTrail) {
+            mouseTrail.style.opacity = '1';
+            mouseTrail.style.left = mouseX - 10 + 'px';
+            mouseTrail.style.top = mouseY - 10 + 'px';
+        }
+        
+        // Update shapes to follow mouse
+        shapes.forEach((shape, index) => {
+            const speed = (index + 1) * 0.02;
+            const offsetX = (mouseX - window.innerWidth / 2) * speed;
+            const offsetY = (mouseY - window.innerHeight / 2) * speed;
+            
+            shape.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        });
+        
+        isMouseMoving = true;
+        
+        // Hide trail after mouse stops moving
+        clearTimeout(mouseTimeout);
+        mouseTimeout = setTimeout(() => {
+            if (mouseTrail) {
+                mouseTrail.style.opacity = '0';
+            }
+        }, 1000);
+    });
+
+    // Mouse leave - hide trail
+    document.addEventListener('mouseleave', () => {
+        if (mouseTrail) {
+            mouseTrail.style.opacity = '0';
+        }
+    });
+
+    // Smooth trail following
+    function animateTrail() {
+        trailX += (mouseX - trailX) * 0.1;
+        trailY += (mouseY - trailY) * 0.1;
+        
+        if (mouseTrail && isMouseMoving) {
+            mouseTrail.style.left = trailX - 10 + 'px';
+            mouseTrail.style.top = trailY - 10 + 'px';
+        }
+        
+        requestAnimationFrame(animateTrail);
+    }
+    
+    animateTrail();
+
+    // Add click effects
+    document.addEventListener('click', (e) => {
+        createClickEffect(e.clientX, e.clientY);
+    });
+
+    // Parallax effect on scroll
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        
+        shapes.forEach((shape, index) => {
+            const speed = (index + 1) * 0.1;
+            shape.style.transform += ` translateY(${rate * speed}px)`;
+        });
+    });
+}
+
+// Click effect function
+function createClickEffect(x, y) {
+    const effect = document.createElement('div');
+    effect.className = 'click-effect';
+    effect.style.left = x + 'px';
+    effect.style.top = y + 'px';
+    
+    // Add CSS for click effect
+    if (!document.querySelector('#click-effect-style')) {
+        const style = document.createElement('style');
+        style.id = 'click-effect-style';
+        style.textContent = `
+            .click-effect {
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1000;
+                animation: clickPulse 0.6s ease-out forwards;
+            }
+            
+            @keyframes clickPulse {
+                0% {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(20);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(effect);
+    
+    // Remove effect after animation
+    setTimeout(() => {
+        if (effect.parentNode) {
+            effect.parentNode.removeChild(effect);
+        }
+    }, 600);
+}
